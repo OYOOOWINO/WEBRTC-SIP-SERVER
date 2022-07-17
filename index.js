@@ -86,7 +86,6 @@ wss.on('connection', (ws, req) => {
             }
 
         } else if (msgType === "ping") {
-            // console.log("GOT PING FROM: ", data)
             wss.clients.forEach(ws => {
                 if (ws.id === data.id) {
                     ws.alive = true;
@@ -102,10 +101,8 @@ wss.on('connection', (ws, req) => {
             })
             wss.clients.forEach(ws => {
                 ws.send(JSON.stringify({ msgType: "pong", activeContacts: activeClients }))
-                //                 console.log("SENT_PONG: ", ws.id)
             })
         } else {
-            //             console.log("COMM_DATA: ", data)
             let target = data.targetID
             let from = ws.id
             wss.clients.forEach(ws => {
@@ -116,18 +113,6 @@ wss.on('connection', (ws, req) => {
         }
     });
 });
-
-
-// setInterval(() => {
-//     console.log("ACTIVE_SOCKS: ",wss.clients.size)
-// }, 5000);
-
-// setInterval(() => {
-//     wss.clients.forEach(ws=>{
-//         console.log("ACTIVE_SOCK_ID: ",ws.id, "LAST_ALIVE: ", ws.lastAlive)
-//     })
-// }, 5000);
-
 
 // clear dead sockets
 const clearDeadSockets = setInterval(() => {
